@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        #header {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: #f4f4f4;
+        }
+        #logo {
+            width: 50px;
+            margin-right: 20px;
+        }
+        #checklist {
+            padding: 20px;
+        }
+        #contract, #observations, #signatures {
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        #signatures {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        #completedBy, #reviewedBy {
+            width: 45%;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <img id="logo" src="logo.png" alt="Logo">
+        <h1>SISTEMA GESTION DE PREVENCION DE RIESGOS</h1>
+    </div>
+
+    <div id="checklist">
+        <h2 id="inspectionType"></h2>
+        <div id="contract">
+            <span id="contractDetails"></span>
+            <span id="area"></span>
+        </div>
+
+        <table id="inspectionTable">
+            <thead>
+                <tr>
+                    <th>Elementos a Inspeccionar</th>
+                    <th>SI</th>
+                    <th>NO</th>
+                    <th>N.A</th>
+                    <th>Accion a Realizar</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody id="inspectionElements">
+                <!-- Contenido dinámico -->
+            </tbody>
+        </table>
+
+        <div id="observations">
+            <span>Observaciones:</span>
+            <span id="observationsContent"></span>
+        </div>
+
+        <div id="signatures">
+            <div id="completedBy">
+                <h3>REALIZÓ</h3>
+                <span id="responsibleName"></span>
+                <span id="responsiblePosition"></span>
+                <span id="responsibleSignature"></span>
+                <span id="responsibleClarification"></span>
+            </div>
+            <div id="reviewedBy">
+                <h3>REVISÓ</h3>
+                <span id="supervisorName"></span>
+                <span id="reviewDate"></span>
+                <span id="supervisorSignature"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var params = new URLSearchParams(window.location.search);
+
+            document.getElementById("inspectionType").textContent = params.get("inspectionType");
+            document.getElementById("contractDetails").textContent = params.get("contractDetails");
+            document.getElementById("area").textContent = params.get("area");
+
+            var elements = params.get("elements").split(",");
+            var tbody = document.getElementById("inspectionElements");
+            elements.forEach(function(element) {
+                var row = document.createElement("tr");
+                row.innerHTML = `<td>${element}</td><td></td><td></td><td></td><td></td><td></td>`;
+                tbody.appendChild(row);
+            });
+
+            document.getElementById("observationsContent").textContent = params.get("observations");
+            document.getElementById("responsibleName").textContent = params.get("responsibleName");
+            document.getElementById("responsiblePosition").textContent = params.get("responsiblePosition");
+            document.getElementById("responsibleSignature").textContent = params.get("responsibleSignature");
+            document.getElementById("responsibleClarification").textContent = params.get("responsibleClarification");
+            document.getElementById("supervisorName").textContent = params.get("supervisorName");
+            document.getElementById("reviewDate").textContent = params.get("reviewDate");
+            document.getElementById("supervisorSignature").textContent = params.get("supervisorSignature");
+        });
+    </script>
+</body>
+</html>
